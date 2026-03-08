@@ -63,6 +63,12 @@ import { MasterAdminService } from './master-admin.service.js';
       useFactory: async (configService: ConfigService) => {
         const redisHost = configService.get<string>('redis.host', 'localhost');
         const redisPort = configService.get<number>('redis.port', 6379);
+        const nodeEnv = configService.get<string>('app.nodeEnv', 'development');
+
+        // Skip Redis in production unless a real host is configured
+        if (redisHost === 'localhost' && nodeEnv === 'production') {
+          return { ttl: 60000 };
+        }
 
         try {
           const { redisStore } = await import('cache-manager-ioredis-yet');
