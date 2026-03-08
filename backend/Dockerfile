@@ -5,7 +5,7 @@ FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
-RUN npm ci --ignore-scripts && npx prisma generate
+RUN npm install --ignore-scripts && npx prisma generate
 
 # ── Build ──
 FROM base AS builder
