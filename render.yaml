@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: unfilter-story-api
+    runtime: node
+    region: oregon
+    rootDir: backend
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && node dist/src/main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: unfilter-story-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+      - key: REDIS_HOST
+        sync: false
+      - key: REDIS_PORT
+        sync: false
+
+databases:
+  - name: unfilter-story-db
+    plan: free
+    databaseName: unfilter_story
+    user: unfilter_user

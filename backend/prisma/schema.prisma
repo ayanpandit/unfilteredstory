@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ──────────────────────────── Enums ────────────────────────────
+
+enum Role {
+  ADMIN
+  EDITOR
+  REPORTER
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+// ──────────────────────────── User ────────────────────────────
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  username  String    @unique
+  email     String    @unique
+  password  String
+  role      Role      @default(REPORTER)
+  isActive  Boolean   @default(true)
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([username])
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+// ──────────────────────────── Category ────────────────────────────
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  articles    Article[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+  @@map("categories")
+}
+
+// ──────────────────────────── Tag ────────────────────────────
+
+model Tag {
+  id        String       @id @default(uuid())
+  name      String       @unique
+  slug      String       @unique
+  articles  ArticleTag[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([slug])
+  @@map("tags")
+}
+
+// ──────────────────────────── Article ────────────────────────────
+
+model Article {
+  id            String        @id @default(uuid())
+  title         String
+  slug          String        @unique
+  content       Json
+  excerpt       String
+  featuredImage String?
+  status        ArticleStatus @default(DRAFT)
+  viewCount     Int           @default(0)
+  author        User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId      String
+  category      Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  categoryId    String
+  tags          ArticleTag[]
+  publishedAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([publishedAt])
+  @@index([title])
+  @@map("articles")
+}
+
+// ──────────────────────────── Article-Tag join table ────────────────────────────
+
+model ArticleTag {
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId     String
+
+  @@id([articleId, tagId])
+  @@map("article_tags")
+}

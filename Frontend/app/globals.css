@@ -1,0 +1,369 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOME / LANDING PAGE — Utility animations
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.25s ease-out;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOME / LANDING PAGE — Visual styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* Hero & CTA gradient */
+.home-hero-gradient {
+  background: linear-gradient(120deg, #ff6a00, #ff3cac, #784ba0);
+}
+
+/* Card lift on hover */
+.home-hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.home-hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Nav underline animation */
+.home-nav-link {
+  position: relative;
+}
+.home-nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #ff3dab;
+  transition: width 0.3s;
+}
+.home-nav-link:hover::after {
+  width: 100%;
+}
+
+/* Glass newsletter input */
+.home-glass-input {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Image zoom container */
+.home-image-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ENHANCED HOME PAGE ANIMATIONS & STYLING
+   ═══════════════════════════════════════════════════════════ */
+
+/* Float animation for hero section backdrop */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.animation-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Smooth expand animation */
+@keyframes expandIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Subtle pulse for featured cards */
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 61, 171, 0.1); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 61, 171, 0); }
+}
+
+/* Enhanced card hover effect with depth */
+.home-card-enhanced:hover {
+  animation: expandIn 0.3s ease-out;
+}
+
+/* Smooth text gradient animation */
+.home-gradient-text {
+  background: linear-gradient(120deg, #ff6a00, #ff3cac, #784ba0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced button styles */
+.home-button-primary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.home-button-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.home-button-primary:hover::before {
+  left: 100%;
+}
+
+/* Smooth scrolling and transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section spacing improvements */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Enhanced typography for better readability */
+.home-landing h1,
+.home-landing h2,
+.home-landing h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Improved focus states for accessibility */
+.home-landing a:focus-visible,
+.home-landing button:focus-visible,
+.home-landing input:focus-visible {
+  outline: 2px solid #ff3dab;
+  outline-offset: 2px;
+}
+
+/* Card shadow enhancement */
+.home-landing .home-hover-lift {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Homepage Control (imported from frontendv2) ─── */
+.homepage-preview {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.preview-label {
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  min-height: 120px;
+}
+
+.preview-hero {
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 12px;
+  color: white;
+}
+
+.preview-sidebar-col { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+}
+
+.preview-zone {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px;
+  flex: 1;
+}
+
+.preview-zone-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.preview-item {
+  font-size: 11px;
+  padding: 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-item.hero { 
+  font-size: 14px; 
+  font-weight: 600; 
+  color: #eab308; 
+}
+
+.homepage-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.homepage-section-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.section-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.section-panel-header h3 { 
+  font-size: 14px; 
+  font-weight: 600; 
+}
+
+.section-desc { 
+  font-size: 12px; 
+  color: #94a3b8; 
+  margin-top: 2px; 
+}
+
+.section-count {
+  background: #f8fafc;
+  color: #94a3b8;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.section-articles { 
+  padding: 8px; 
+}
+
+.homepage-article-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #f1f5f9;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  cursor: grab;
+  transition: all 0.15s;
+  background: white;
+}
+
+.homepage-article-card:hover { 
+  border-color: #eab308; 
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.homepage-article-card.featured { 
+  border-left: 3px solid #eab308; 
+}
+
+.drag-handle { 
+  color: #94a3b8; 
+  font-size: 16px; 
+  cursor: grab; 
+  user-select: none; 
+}
+
+.article-emoji { 
+  font-size: 20px; 
+}
+
+/* Print styles */
+@media print {
+  .home-landing {
+    background: white;
+  }
+  
+  header, footer {
+    display: none;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
