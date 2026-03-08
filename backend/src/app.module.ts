@@ -10,6 +10,7 @@ import {
   databaseConfig,
   jwtConfig,
   redisConfig,
+  masterAdminConfig,
   validate,
 } from './config/index.js';
 import { PrismaModule } from './prisma/prisma.module.js';
@@ -23,13 +24,14 @@ import { RssModule } from './modules/rss/rss.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { JwtAuthGuard } from './common/guards/index.js';
+import { MasterAdminService } from './master-admin.service.js';
 
 @Module({
   imports: [
     // Configuration
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig, jwtConfig, redisConfig],
+      load: [appConfig, databaseConfig, jwtConfig, redisConfig, masterAdminConfig],
       validate,
       envFilePath: '.env',
     }),
@@ -95,6 +97,7 @@ import { JwtAuthGuard } from './common/guards/index.js';
   controllers: [AppController],
   providers: [
     AppService,
+    MasterAdminService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

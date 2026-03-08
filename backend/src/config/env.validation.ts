@@ -43,6 +43,22 @@ class EnvironmentVariables {
   @IsString()
   @IsOptional()
   CORS_ORIGIN: string = '*';
+
+  @IsString()
+  @IsOptional()
+  MASTER_ADMIN_USERNAME: string = 'masteradmin';
+
+  @IsString()
+  @IsOptional()
+  MASTER_ADMIN_PASSWORD: string = '';
+
+  @IsString()
+  @IsOptional()
+  MASTER_ADMIN_EMAIL: string = 'master@unfilterstory.com';
+
+  @IsString()
+  @IsOptional()
+  MASTER_ADMIN_NAME: string = 'Master Admin';
 }
 
 export function validate(config: Record<string, unknown>) {
