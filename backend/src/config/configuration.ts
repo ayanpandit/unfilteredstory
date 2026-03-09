@@ -26,3 +26,16 @@ export const masterAdminConfig = registerAs('masterAdmin', () => ({
   email: process.env.MASTER_ADMIN_EMAIL || 'master@unfilterstory.com',
   name: process.env.MASTER_ADMIN_NAME || 'Master Admin',
 }));
+
+export const feedConfig = registerAs('feed', () => ({
+  siteUrl: (process.env.SITE_URL || process.env.CORS_ORIGIN || 'http://localhost:3002').split(',')[0].trim(),
+  feedBaseUrl: process.env.FEED_BASE_URL || '',
+  title: process.env.SITE_TITLE || 'UnfilterStory',
+  subtitle: process.env.SITE_SUBTITLE || 'Raw Startup Intelligence — No fluff. No bias. Just the stories that matter.',
+  copyright: `© ${new Date().getFullYear()} UnfilterStory. All rights reserved.`,
+  language: process.env.SITE_LANGUAGE || 'en',
+  authorName: process.env.SITE_AUTHOR || 'UnfilterStory Editorial',
+  authorEmail: process.env.SITE_AUTHOR_EMAIL || 'editorial@unfilterstory.com',
+  ttl: parseInt(process.env.FEED_TTL ?? '60', 10),
+  maxItems: parseInt(process.env.FEED_MAX_ITEMS ?? '50', 10),
+}));

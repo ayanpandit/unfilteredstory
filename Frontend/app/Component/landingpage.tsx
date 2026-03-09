@@ -96,15 +96,13 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <a
-              href={`${API_URL.replace("/api/v1", "")}/api/v1/rss`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/feeds"
               className="text-orange-500 hover:text-orange-600 transition-colors p-2"
-              title="RSS Feed"
+              title="RSS Feeds"
             >
               <IconRss />
-            </a>
+            </Link>
             <div className="relative hidden sm:block">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 <IconSearch />
@@ -308,17 +306,31 @@ export default function HomePage() {
               <div className="relative z-10 max-w-3xl mx-auto flex flex-col gap-6">
                 <h2 className="text-3xl md:text-4xl font-black leading-tight">Stay Updated</h2>
                 <p className="text-white/90 text-base md:text-lg">
-                  Subscribe to our RSS feed for the latest stories.
+                  Subscribe to our feeds in RSS, Atom, or JSON — pick your format.
                 </p>
-                <div className="flex justify-center gap-4 mt-4">
+                <div className="flex flex-wrap justify-center gap-4 mt-4">
                   <a
-                    href={`${API_URL.replace("/api/v1", "")}/api/v1/rss`}
+                    href={`${API_URL}/rss`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white text-[#ff3dab] px-8 py-4 rounded-full font-black hover:scale-105 transition-all duration-300 active:scale-95 shadow-xl inline-flex items-center gap-2"
+                    className="bg-white text-orange-500 px-6 py-3 rounded-full font-black hover:scale-105 transition-all duration-300 active:scale-95 shadow-xl inline-flex items-center gap-2 text-sm"
                   >
-                    <IconRss /> RSS Feed
+                    <IconRss /> RSS 2.0
                   </a>
+                  <a
+                    href={`${API_URL}/rss/atom`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white text-blue-500 px-6 py-3 rounded-full font-black hover:scale-105 transition-all duration-300 active:scale-95 shadow-xl inline-flex items-center gap-2 text-sm"
+                  >
+                    <IconRss /> Atom
+                  </a>
+                  <Link
+                    href="/feeds"
+                    className="bg-white/20 text-white border-2 border-white/50 px-6 py-3 rounded-full font-black hover:scale-105 transition-all duration-300 active:scale-95 shadow-xl inline-flex items-center gap-2 text-sm"
+                  >
+                    All Feeds →
+                  </Link>
                 </div>
               </div>
             </div>
@@ -338,15 +350,37 @@ export default function HomePage() {
                 The unfiltered source of news. Stories that matter.
               </p>
             </div>
-            <div className="flex gap-8">
+            <div className="flex flex-wrap gap-6">
               <a
-                href={`${API_URL.replace("/api/v1", "")}/api/v1/rss`}
+                href={`${API_URL}/rss`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-orange-500 transition-colors flex items-center gap-2 text-sm"
               >
-                <IconRss /> RSS Feed
+                <IconRss /> RSS
               </a>
+              <a
+                href={`${API_URL}/rss/atom`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 text-sm"
+              >
+                <IconRss /> Atom
+              </a>
+              <a
+                href={`${API_URL}/rss/json`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-2 text-sm"
+              >
+                <IconRss /> JSON
+              </a>
+              <Link
+                href="/feeds"
+                className="text-slate-400 hover:text-white transition-colors text-sm"
+              >
+                All Feeds
+              </Link>
             </div>
           </div>
           <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500">

@@ -11,6 +11,7 @@ import {
   jwtConfig,
   redisConfig,
   masterAdminConfig,
+  feedConfig,
   validate,
 } from './config/index.js';
 import { PrismaModule } from './prisma/prisma.module.js';
@@ -31,7 +32,7 @@ import { MasterAdminService } from './master-admin.service.js';
     // Configuration
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig, jwtConfig, redisConfig, masterAdminConfig],
+      load: [appConfig, databaseConfig, jwtConfig, redisConfig, masterAdminConfig, feedConfig],
       validate,
       envFilePath: '.env',
     }),

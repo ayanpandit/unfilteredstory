@@ -75,15 +75,13 @@ export default function ArticlePage() {
             <h2 className="text-slate-900 text-lg font-black">UnfilterStory</h2>
           </Link>
           <div className="flex items-center gap-4">
-            <a
-              href={`${API_URL.replace("/api/v1", "")}/api/v1/rss`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/feeds"
               className="text-orange-500 hover:text-orange-600 transition-colors p-2"
-              title="RSS Feed"
+              title="RSS Feeds"
             >
               <IconRss />
-            </a>
+            </Link>
             <Link href="/" className="text-sm font-semibold text-slate-600 hover:text-[#ff3dab] transition-colors">
               ← Back
             </Link>
