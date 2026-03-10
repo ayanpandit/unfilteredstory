@@ -50,7 +50,40 @@ body {
 
 /* Hero & CTA gradient */
 .home-hero-gradient {
-  background: linear-gradient(120deg, #ff6a00, #ff3cac, #784ba0);
+  background: linear-gradient(120deg, #f59e0b, #d121b6, #8b5cf6);
+}
+
+/* Rainbow hero gradient matching unfilterstory design */
+.hero-rainbow-gradient {
+  background: linear-gradient(135deg, #ff3b30 0%, #f59e0b 35%, #d121b6 65%, #8b5cf6 100%);
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Stats bar gradient */
+.stats-rainbow-gradient {
+  background: linear-gradient(90deg, #f59e0b 0%, #ff3b30 35%, #d121b6 65%, #8b5cf6 100%);
+}
+
+/* Newsletter card gradient */
+.newsletter-rainbow-gradient {
+  background: linear-gradient(135deg, #ff3b30 0%, #f59e0b 35%, #d121b6 65%, #8b5cf6 100%);
 }
 
 /* Card lift on hover */
@@ -73,7 +106,7 @@ body {
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: #ff3dab;
+  background-color: #d121b6;
   transition: width 0.3s;
 }
 .home-nav-link:hover::after {
@@ -120,8 +153,8 @@ body {
 
 /* Subtle pulse for featured cards */
 @keyframes subtlePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 61, 171, 0.1); }
-  50% { box-shadow: 0 0 0 8px rgba(255, 61, 171, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(209, 33, 182, 0.1); }
+  50% { box-shadow: 0 0 0 8px rgba(209, 33, 182, 0); }
 }
 
 /* Enhanced card hover effect with depth */
@@ -131,7 +164,7 @@ body {
 
 /* Smooth text gradient animation */
 .home-gradient-text {
-  background: linear-gradient(120deg, #ff6a00, #ff3cac, #784ba0);
+  background: linear-gradient(120deg, #ff3b30, #f59e0b, #d121b6, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
