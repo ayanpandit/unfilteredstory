@@ -41,6 +41,23 @@ const IconJson = () => (
   </svg>
 );
 
+/** Build correct feed URLs using the frontend's API_URL instead of whatever the backend returned */
+function feedUrls(path: string) {
+  return {
+    rss: `${API_URL}/rss${path}`,
+    atom: `${API_URL}/rss${path}/atom`,
+    json: `${API_URL}/rss${path}/json`,
+  };
+}
+
+function mainFeedUrls() {
+  return {
+    rss: `${API_URL}/rss`,
+    atom: `${API_URL}/rss/atom`,
+    json: `${API_URL}/rss/json`,
+  };
+}
+
 function FeedBadges({ rss, atom, json }: { rss: string; atom: string; json: string }) {
   return (
     <div className="flex flex-wrap gap-2">
@@ -126,11 +143,7 @@ export default function FeedsPage() {
               </h2>
               <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50/50">
                 <p className="text-sm text-slate-600 mb-4">All published articles across every category and topic.</p>
-                <FeedBadges
-                  rss={directory.feeds.main.rss}
-                  atom={directory.feeds.main.atom}
-                  json={directory.feeds.main.json}
-                />
+                <FeedBadges {...mainFeedUrls()} />
               </div>
             </section>
 
@@ -145,7 +158,7 @@ export default function FeedsPage() {
                   {directory.feeds.categories.map((cat) => (
                     <div key={cat.slug} className="p-5 rounded-xl border border-slate-200 bg-white hover:shadow-sm transition-shadow">
                       <h3 className="font-bold text-base mb-3">{cat.name}</h3>
-                      <FeedBadges rss={cat.rss} atom={cat.atom} json={cat.json} />
+                      <FeedBadges {...feedUrls(`/category/${cat.slug}`)} />
                     </div>
                   ))}
                 </div>
@@ -163,7 +176,7 @@ export default function FeedsPage() {
                   {directory.feeds.tags.map((tag) => (
                     <div key={tag.slug} className="p-5 rounded-xl border border-slate-200 bg-white hover:shadow-sm transition-shadow">
                       <h3 className="font-bold text-sm mb-3">#{tag.name}</h3>
-                      <FeedBadges rss={tag.rss} atom={tag.atom} json={tag.json} />
+                      <FeedBadges {...feedUrls(`/tag/${tag.slug}`)} />
                     </div>
                   ))}
                 </div>
@@ -179,7 +192,7 @@ export default function FeedsPage() {
               <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50/50">
                 <p className="text-sm text-slate-600 mb-4">XML Sitemap for search engines.</p>
                 <a
-                  href={directory.sitemap}
+                  href={`${API_URL}/sitemap.xml`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sky-50 text-sky-600 border border-sky-200 text-xs font-bold hover:bg-sky-100 transition-colors"
