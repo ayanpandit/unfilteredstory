@@ -264,7 +264,7 @@ export default function HomePage() {
                >
                  <div className="rounded-3xl overflow-hidden border border-white/30 shadow-[0_40px_80px_rgba(0,0,0,0.6)] backdrop-blur-2xl bg-white/10 p-3 animate-float relative z-20">
                     <img 
-                      src={articles[0]?.featuredImage || "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"} 
+                      src={articles[0]?.featuredImage || "https://tii.imgix.net/production/articles/1099/7e908221-3641-436c-aecf-223b59bdd2b6.jpg?auto=compress&fit=crop&auto=format"} 
                       alt="UnfilterStory Interface" 
                       className="rounded-2xl w-full aspect-[4/3] object-cover" 
                     />
