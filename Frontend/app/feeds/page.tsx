@@ -41,6 +41,65 @@ const IconJson = () => (
   </svg>
 );
 
+const IconCopy = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+    <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
+    <path d="M4.5 6A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18h7a1.5 1.5 0 001.5-1.5v-5.879a1.5 1.5 0 00-.44-1.06L9.44 6.439A1.5 1.5 0 008.378 6H4.5z" />
+  </svg>
+);
+
+const IconCheck = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+    <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+  </svg>
+);
+
+function CopyFeedButton({
+  url,
+  icon,
+  label,
+  className,
+}: {
+  url: string;
+  icon: React.ReactNode;
+  label: string;
+  className: string;
+}) {
+  const [copied, setCopied] = React.useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      title={copied ? "Copied!" : `Copy ${label} URL`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${className}`}
+    >
+      {icon}
+      <span>{label}</span>
+      {copied ? <IconCheck /> : <IconCopy />}
+    </button>
+  );
+}
+
 /** Build correct feed URLs using the frontend's API_URL instead of whatever the backend returned */
 function feedUrls(path: string) {
   return {
@@ -61,30 +120,24 @@ function mainFeedUrls() {
 function FeedBadges({ rss, atom, json }: { rss: string; atom: string; json: string }) {
   return (
     <div className="flex flex-wrap gap-2">
-      <a
-        href={rss}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 text-orange-600 border border-orange-200 text-xs font-bold hover:bg-orange-100 transition-colors"
-      >
-        <IconRss /> RSS 2.0
-      </a>
-      <a
-        href={atom}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 text-xs font-bold hover:bg-blue-100 transition-colors"
-      >
-        <IconAtom /> Atom
-      </a>
-      <a
-        href={json}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200 text-xs font-bold hover:bg-emerald-100 transition-colors"
-      >
-        <IconJson /> JSON
-      </a>
+      <CopyFeedButton
+        url={rss}
+        icon={<IconRss />}
+        label="RSS 2.0"
+        className="bg-orange-50 text-orange-600 border border-orange-200 hover:bg-orange-100"
+      />
+      <CopyFeedButton
+        url={atom}
+        icon={<IconAtom />}
+        label="Atom"
+        className="bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100"
+      />
+      <CopyFeedButton
+        url={json}
+        icon={<IconJson />}
+        label="JSON"
+        className="bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100"
+      />
     </div>
   );
 }
@@ -208,7 +261,7 @@ export default function FeedsPage() {
               <div className="grid md:grid-cols-3 gap-6 text-sm text-slate-600">
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">Desktop Readers</h3>
-                  <p>Copy any RSS or Atom link and paste it into apps like <strong>Feedly</strong>, <strong>Inoreader</strong>, <strong>NewsBlur</strong>, or <strong>NetNewsWire</strong>.</p>
+                  <p>Click any feed button to <strong>copy the URL</strong>, then paste it into apps like <strong>Feedly</strong>, <strong>Inoreader</strong>, <strong>NewsBlur</strong>, or <strong>NetNewsWire</strong>.</p>
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 mb-2">Mobile</h3>
