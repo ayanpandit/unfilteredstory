@@ -6,9 +6,10 @@ interface HeaderProps {
   user: { id: string; name: string; email: string; role: string };
   onNewArticle: () => void;
   onLogout: () => void;
+  onToggleSidebar: () => void;
 }
 
-export default function Header({ user, onNewArticle, onLogout }: HeaderProps) {
+export default function Header({ user, onNewArticle, onLogout, onToggleSidebar }: HeaderProps) {
   const [showProfile, setShowProfile] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -31,10 +32,24 @@ export default function Header({ user, onNewArticle, onLogout }: HeaderProps) {
 
   return (
     <header className="cms-header">
-      <div className="header-search">
-        <h2 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 600, color: "#e2e8f0" }}>
-          Welcome, {user.name}
-        </h2>
+      <div className="header-left">
+        <button
+          type="button"
+          className="mobile-menu-btn"
+          aria-label="Open menu"
+          onClick={onToggleSidebar}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <div className="header-search">
+          <h2 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 600, color: "#e2e8f0" }}>
+            Welcome, {user.name}
+          </h2>
+        </div>
       </div>
 
       <div className="header-actions">

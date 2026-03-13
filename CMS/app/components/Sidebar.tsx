@@ -5,6 +5,8 @@ import React from "react";
 interface SidebarProps {
   activeSection: string;
   onNavigate: (section: string) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const navItems = [
@@ -16,32 +18,43 @@ const navItems = [
   { id: "account", label: "Account", icon: AccountIcon },
 ];
 
-export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
+export default function Sidebar({ activeSection, onNavigate, isOpen, onClose }: SidebarProps) {
   return (
-    <aside className="cms-sidebar">
-      <div className="sidebar-brand">
-        <div className="brand-text">
-          <span className="brand-name">UnfilterStory</span>
-          <span className="brand-sub">CMS</span>
+    <>
+      <button
+        type="button"
+        className={`cms-sidebar-backdrop ${isOpen ? "open" : ""}`}
+        onClick={onClose}
+        aria-label="Close menu"
+      />
+      <aside className={`cms-sidebar ${isOpen ? "open" : ""}`}>
+        <div className="sidebar-brand">
+          <div className="brand-text">
+            <span className="brand-name">UnfilterStory</span>
+            <span className="brand-sub">CMS</span>
+          </div>
         </div>
-      </div>
-      <nav className="sidebar-nav">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            className={`nav-item ${activeSection === item.id ? "active" : ""}`}
-            onClick={() => onNavigate(item.id)}
-            title={item.label}
-          >
-            <item.icon />
-            <span className="nav-label">{item.label}</span>
-          </button>
-        ))}
-      </nav>
-      <div className="sidebar-footer">
-        <div className="sidebar-version">v1.0</div>
-      </div>
-    </aside>
+        <nav className="sidebar-nav">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              className={`nav-item ${activeSection === item.id ? "active" : ""}`}
+              onClick={() => {
+                onNavigate(item.id);
+                onClose();
+              }}
+              title={item.label}
+            >
+              <item.icon />
+              <span className="nav-label">{item.label}</span>
+            </button>
+          ))}
+        </nav>
+        <div className="sidebar-footer">
+          <div className="sidebar-version">v1.0</div>
+        </div>
+      </aside>
+    </>
   );
 }
 

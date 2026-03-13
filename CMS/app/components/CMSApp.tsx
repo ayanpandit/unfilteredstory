@@ -18,6 +18,7 @@ export default function CMSApp() {
   const [ready, setReady] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
   const [editArticleId, setEditArticleId] = useState<string | null>(null);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     const token = getToken();
@@ -42,16 +43,19 @@ export default function CMSApp() {
   const handleNavigate = (section: string) => {
     setEditArticleId(null);
     setActiveSection(section);
+    setMobileSidebarOpen(false);
   };
 
   const handleNewArticle = () => {
     setEditArticleId(null);
     setActiveSection("article-editor");
+    setMobileSidebarOpen(false);
   };
 
   const handleEditArticle = (id: string) => {
     setEditArticleId(id);
     setActiveSection("article-editor");
+    setMobileSidebarOpen(false);
   };
 
   if (!ready) return null;
@@ -81,9 +85,19 @@ export default function CMSApp() {
 
   return (
     <div className="cms-layout">
-      <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
+      <Sidebar
+        activeSection={activeSection}
+        onNavigate={handleNavigate}
+        isOpen={mobileSidebarOpen}
+        onClose={() => setMobileSidebarOpen(false)}
+      />
       <div className="cms-main">
-        <Header user={user} onNewArticle={handleNewArticle} onLogout={handleLogout} />
+        <Header
+          user={user}
+          onNewArticle={handleNewArticle}
+          onLogout={handleLogout}
+          onToggleSidebar={() => setMobileSidebarOpen((v) => !v)}
+        />
         <main className="cms-workspace">
           {renderContent()}
         </main>
